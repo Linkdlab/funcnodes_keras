@@ -6,8 +6,16 @@ authors = ["Kourosh Rezaei <kouroshrezaei90@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.10,<3.12"
 
+funcnodes = "^0.2.21"
+
+tensorflow-macos = { version = "^2.15.0", markers = "platform_system=='Darwin' and platform_machine=='arm64'" }
+tensorflow = "^2.13.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
 
 [build-system]
 requires = ["poetry-core"]
