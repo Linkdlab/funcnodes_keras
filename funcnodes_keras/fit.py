@@ -146,8 +146,6 @@ def _evaluate(
     steps: Optional[int] = None,
     callbacks: Optional[List[Callback]] = None,
 ) -> dict:
-    if not isinstance(model, Model):
-        model = model()
     return model.evaluate(
         x=x,
         y=y,
@@ -166,21 +164,20 @@ def _evaluate(
 )
 def _predict(
     model: Model,
-    x: Union[np.ndarray, dict],
+    x: Union[np.ndarray, List[np.ndarray]],
     batch_size: Optional[int] = None,
     verbose: Verbose = Verbose.default(),
     steps: Optional[int] = None,
     callbacks: Optional[List[Callback]] = None,
 ) -> np.ndarray:
-    if not isinstance(model, Model):
-        model = model()
+    if np.ndim(x) == 1:
+        x = np.expand_dims(x, axis=0)
     return model.predict(
         x=x,
         batch_size=batch_size,
         verbose=verbose,
         steps=steps,
         callbacks=callbacks,
-        return_dict=True,
     )
 
 
@@ -195,8 +192,6 @@ def _train_on_batch(
     sample_weight: Optional[np.ndarray] = None,
     class_weight: Optional[dict] = None,
 ) -> dict:
-    if not isinstance(model, Model):
-        model = model()
     return model.train_on_batch(
         x=x,
         y=y,
@@ -216,8 +211,6 @@ def _test_on_batch(
     y: np.ndarray,
     sample_weight: Optional[np.ndarray] = None,
 ) -> dict:
-    if not isinstance(model, Model):
-        model = model()
     return model.test_on_batch(
         x=x,
         y=y,
@@ -234,8 +227,6 @@ def _predict_on_batch(
     model: Model,
     x: np.ndarray,
 ) -> dict:
-    if not isinstance(model, Model):
-        model = model()
     return model.predict_on_batch(
         x=x,
     )
