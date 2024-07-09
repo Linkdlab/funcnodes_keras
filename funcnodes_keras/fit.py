@@ -170,8 +170,6 @@ def _predict(
     steps: Optional[int] = None,
     callbacks: Optional[List[Callback]] = None,
 ) -> np.ndarray:
-    if np.ndim(x) == 1:
-        x = np.expand_dims(x, axis=0)
     return model.predict(
         x=x,
         batch_size=batch_size,

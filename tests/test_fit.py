@@ -18,6 +18,9 @@ from tensorflow.keras.metrics import SparseCategoricalAccuracy
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from tensorflow.keras.optimizers import RMSprop
 
+from funcnodes_keras.applications import (
+    _ResNet50
+)
 
 from funcnodes_keras.fit import (
     _fit,
@@ -53,7 +56,7 @@ outputs = Dense(10, activation="softmax", name="predictions")(x)
 prepared_model = Model(inputs=inputs, outputs=outputs)
 
 
-class TestCompilingingNodes(unittest.IsolatedAsyncioTestCase):
+class TestCompilingingFittingNodes(unittest.IsolatedAsyncioTestCase):
     async def test_compile_keras_example(self):
         ft_model: fn.Node = _compile()
         ft_model.inputs["model"].value = prepared_model
@@ -77,3 +80,20 @@ class TestCompilingingNodes(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(history, History)
         self.assertIsInstance(metrics_dictionary, dict)
         self.assertIsInstance(fitted_model, Model)
+
+
+random_image_array = np.random.randint(0, 256, size=(224, 224, 3))
+
+class TestPredictingNodes(unittest.IsolatedAsyncioTestCase):
+    async def test_predict_random_pretrained(self):
+        ft_model: fn.Node = _ResNet50()
+        ft_model.inputs["include_top"].value = False
+        self.assertIsInstance(ft_model, fn.Node)
+
+        t_model: fn.Node = _predict()
+        t_model.inputs["model"].connect(ft_model.outputs["out"])
+        t_model.inputs["x"].value = np.expand_dims(random_image_array, axis=0)
+        self.assertIsInstance(t_model, fn.Node)
+        await fn.run_until_complete(t_model, ft_model)
+        prediction = t_model.outputs["out"].value
+        print(prediction)
