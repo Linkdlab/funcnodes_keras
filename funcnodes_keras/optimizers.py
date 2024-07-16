@@ -20,7 +20,7 @@ from tensorflow.keras.optimizers import (
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.SGD",
+    node_id="tensorflow.keras.optimizers.SGD",
     name="SGD",
 )
 @controlled_wrapper(SGD, wrapper_attribute="__fnwrapped__")
@@ -55,7 +55,7 @@ def _SGD(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.RMSprop",
+    node_id="tensorflow.keras.optimizers.RMSprop",
     name="RMSprop",
 )
 @controlled_wrapper(RMSprop, wrapper_attribute="__fnwrapped__")
@@ -94,7 +94,7 @@ def _RMSprop(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Adam",
+    node_id="tensorflow.keras.optimizers.Adam",
     name="Adam",
 )
 @controlled_wrapper(Adam, wrapper_attribute="__fnwrapped__")
@@ -133,7 +133,7 @@ def _Adam(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.AdamW",
+    node_id="tensorflow.keras.optimizers.AdamW",
     name="AdamW",
 )
 @controlled_wrapper(AdamW, wrapper_attribute="__fnwrapped__")
@@ -172,7 +172,7 @@ def _AdamW(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Adadelta",
+    node_id="tensorflow.keras.optimizers.Adadelta",
     name="Adadelta",
 )
 @controlled_wrapper(Adadelta, wrapper_attribute="__fnwrapped__")
@@ -205,7 +205,7 @@ def _Adadelta(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Adagrad",
+    node_id="tensorflow.keras.optimizers.Adagrad",
     name="Adagrad",
 )
 @controlled_wrapper(Adagrad, wrapper_attribute="__fnwrapped__")
@@ -240,7 +240,7 @@ def _Adagrad(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Adamax",
+    node_id="tensorflow.keras.optimizers.Adamax",
     name="Adamax",
 )
 @controlled_wrapper(Adamax, wrapper_attribute="__fnwrapped__")
@@ -277,7 +277,7 @@ def _Adamax(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Adafactor",
+    node_id="tensorflow.keras.optimizers.Adafactor",
     name="Adafactor",
 )
 @controlled_wrapper(Adafactor, wrapper_attribute="__fnwrapped__")
@@ -318,7 +318,7 @@ def _Adafactor(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Nadam",
+    node_id="tensorflow.keras.optimizers.Nadam",
     name="Nadam",
 )
 @controlled_wrapper(Nadam, wrapper_attribute="__fnwrapped__")
@@ -355,7 +355,7 @@ def _Nadam(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Ftrl",
+    node_id="tensorflow.keras.optimizers.Ftrl",
     name="Ftrl",
 )
 @controlled_wrapper(Ftrl, wrapper_attribute="__fnwrapped__")
@@ -398,7 +398,7 @@ def _Ftrl(
 
 
 @NodeDecorator(
-    node_id="tensorflow.keras.metrics.Lion",
+    node_id="tensorflow.keras.optimizers.Lion",
     name="Lion",
 )
 @controlled_wrapper(Lion, wrapper_attribute="__fnwrapped__")
