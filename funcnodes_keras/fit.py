@@ -1,31 +1,12 @@
-from typing import Literal, Union, Optional, Iterator, Tuple, Callable, List
+from typing import Literal, Union, Optional, Tuple, List
 import numpy as np
 from funcnodes import Shelf, NodeDecorator
-from exposedfunctionality import controlled_wrapper
 from enum import Enum
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Optimizer
+from tensorflow.keras.losses import Loss
 from tensorflow.keras.metrics import Metric
 from tensorflow.keras.callbacks import Callback, History
-
-
-class OptimizerNames(Enum):
-    adam = "adam"
-    sgd = "sgd"
-    rmsprop = "rmsprop"
-    adamw = "adamw"
-    adagrad = "adagrad"
-    adadelta = "adadelta"
-    adamax = "adamax"
-    adamfactor = "adamfactor"
-    nadam = "nadam"
-    ftrl = "ftrl"
-    lion = "lion"
-    loss_scale_opt = "loss scale optizer"
-
-    @classmethod
-    def default(cls):
-        return cls.rmsprop.value
 
 
 @NodeDecorator(
@@ -38,16 +19,18 @@ class OptimizerNames(Enum):
 # @controlled_wrapper(compile , wrapper_attribute="__fnwrapped__")
 def _compile(
     model: Model,
-    optimizer: Union[OptimizerNames, Optimizer] = OptimizerNames.default(),
-    loss=None,
-    loss_weights=None,
-    metrics: Optional[List[Metric]] = None,
+    optimizer: Optimizer,
+    loss: Loss,
+    metrics: Union[Metric, List[Metric], dict],
+    loss_weights: Optional[Union[list, dict]] = None,
     weighted_metrics: Optional[list] = None,
     run_eagerly: bool = False,
     steps_per_execution: int = 1,
     jit_compile: Union[bool, Literal["auto"]] = "auto",
     auto_scale_loss: bool = True,
 ) -> Model:
+    if isinstance(metrics, Metric):
+        metrics = [metrics]
     model.compile(
         optimizer=optimizer,
         loss=loss,
@@ -84,15 +67,15 @@ class Verbose(Enum):
 )
 def _fit(
     model: Model,
-    x: Union[np.ndarray, dict],
-    y: Optional[Union[np.ndarray, dict]] = None,
+    x: Union[list, np.ndarray, dict],
+    y: Optional[Union[list, np.ndarray, dict]] = None,
     batch_size: Optional[int] = None,
     epochs: int = 1,
     verbose: Verbose = Verbose.default(),
-    callbacks: Optional[List[Callback]] = None,
+    callbacks: Optional[Union[Callback, List[Callback]]] = None,
     validation_split: float = 0.0,
-    x_val: Optional[Union[np.ndarray, dict]] = None,
-    y_val: Optional[Union[np.ndarray, dict]] = None,
+    x_val: Optional[Union[list, np.ndarray, dict]] = None,
+    y_val: Optional[Union[list, np.ndarray, dict]] = None,
     shuffle: bool = True,
     class_weight: Optional[dict] = None,
     sample_weight: Optional[np.ndarray] = None,
@@ -102,6 +85,8 @@ def _fit(
     validation_batch_size: Optional[int] = None,
     validation_freq: int = 1,
 ) -> Tuple[Model, History, dict]:
+    if isinstance(callbacks, Callback):
+        callbacks = [callbacks]
     if x_val is not None and y_val is not None:
         validation_data: Tuple = [x_val, y_val]
     else:
@@ -138,8 +123,8 @@ def _fit(
 )
 def _evaluate(
     model: Model,
-    x: Union[np.ndarray, dict],
-    y: Optional[Union[np.ndarray, dict]] = None,
+    x: Union[list, np.ndarray, dict],
+    y: Optional[Union[list, np.ndarray, dict]] = None,
     batch_size: Optional[int] = None,
     verbose: Verbose = Verbose.default(),
     sample_weight: Optional[np.ndarray] = None,

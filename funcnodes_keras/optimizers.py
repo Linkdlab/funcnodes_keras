@@ -1,8 +1,6 @@
-from typing import Literal, Union, Optional, Iterator, Tuple, Callable, List
-import numpy as np
+from typing import Optional
 from funcnodes import Shelf, NodeDecorator
 from exposedfunctionality import controlled_wrapper
-from enum import Enum
 from tensorflow.keras.optimizers import (
     Optimizer,
     SGD,
@@ -432,7 +430,7 @@ def _Lion(
     )
 
 
-OPTIMIZER_NODE_SHELFE = Shelf(
+OPTIMIZERS_NODE_SHELFE = Shelf(
     nodes=[
         _SGD,
         _RMSprop,
