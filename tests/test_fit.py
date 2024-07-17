@@ -5,6 +5,7 @@ from tensorflow.keras.callbacks import History
 from tensorflow.keras.models import Model
 from tensorflow.keras import Input
 from tensorflow.keras.layers import Dense
+from tensorflow.keras import KerasTensor
 
 from funcnodes_keras.datasets import _mnist
 from funcnodes_keras.metrics import _SparseCategoricalAccuracy
@@ -12,7 +13,8 @@ from funcnodes_keras.losses import _SparseCategoricalCrossentropy
 from funcnodes_keras.optimizers import _RMSprop
 
 from funcnodes_keras.applications import _ResNet50
-
+from funcnodes_keras.layers import _Input, _Dense, Activation
+from funcnodes_keras.models import _Model
 from funcnodes_keras.fit import (
     _fit,
     _compile,
@@ -48,15 +50,35 @@ class TestKerasExampleNodes(unittest.IsolatedAsyncioTestCase):
         x_train = x_train[:-10000]
         y_train = y_train[:-10000]
 
-        # TODO: add funcnode base model
-        inputs = Input(shape=(784,), name="digits")
-        x = Dense(64, activation="relu", name="dense_1")(inputs)
-        x = Dense(64, activation="relu", name="dense_2")(x)
-        outputs = Dense(10, activation="softmax", name="predictions")(x)
+        input_layer: fn.Node = _Input()
+        input_layer.inputs["shape_1_height_or_sequence_length"].value = 784
+        input_layer.inputs["shape_2_width_or_input_dim"].value = 1
 
-        prepared_model = Model(inputs=inputs, outputs=outputs)
+        self.assertIsInstance(input_layer, fn.Node)
 
-        self.assertIsInstance(prepared_model, Model)
+        dense_layer_1: fn.Node = _Dense()
+        dense_layer_1.inputs["input_model"].connect(input_layer.outputs["out"])
+        dense_layer_1.inputs["units"].value = 64
+        dense_layer_1.inputs["activation"].value = Activation.relu
+        self.assertIsInstance(dense_layer_1, fn.Node)
+
+        dense_layer_2: fn.Node = _Dense()
+        dense_layer_2.inputs["input_model"].connect(dense_layer_1.outputs["out"])
+        dense_layer_2.inputs["units"].value = 64
+        dense_layer_2.inputs["activation"].value = Activation.relu
+        self.assertIsInstance(dense_layer_2, fn.Node)
+
+        dense_layer_3: fn.Node = _Dense()
+        dense_layer_3.inputs["input_model"].connect(dense_layer_2.outputs["out"])
+        dense_layer_3.inputs["units"].value = 10
+        dense_layer_3.inputs["activation"].value = Activation.softmax
+        self.assertIsInstance(dense_layer_3, fn.Node)
+
+        prepared_model: fn.Node = _Model()
+        prepared_model.inputs["input"].connect(input_layer.outputs["out"])
+        prepared_model.inputs["output"].connect(dense_layer_3.outputs["out"])
+        self.assertIsInstance(prepared_model, fn.Node)
+
         loss: fn.Node = _SparseCategoricalCrossentropy()
         self.assertIsInstance(loss, fn.Node)
 
@@ -66,13 +88,8 @@ class TestKerasExampleNodes(unittest.IsolatedAsyncioTestCase):
         optimizer: fn.Node = _RMSprop()
         self.assertIsInstance(optimizer, fn.Node)
 
-        # await fn.run_until_complete(metric, loss, optimizer)
-        # self.assertIsInstance(loss.outputs["out"].value, Loss)
-        # self.assertIsInstance(metric.outputs["out"].value, Metric)
-        # self.assertIsInstance(optimizer.outputs["out"].value, Optimizer)
-
         compile: fn.Node = _compile()
-        compile.inputs["model"].value = prepared_model
+        compile.inputs["model"].connect(prepared_model.outputs["out"])
         compile.inputs["loss"].connect(loss.outputs["out"])
         compile.inputs["optimizer"].connect(optimizer.outputs["out"])
         compile.inputs["metrics"].connect(metric.outputs["out"])
@@ -85,7 +102,18 @@ class TestKerasExampleNodes(unittest.IsolatedAsyncioTestCase):
         fit.inputs["y_val"].value = y_val
         self.assertIsInstance(fit, fn.Node)
 
-        await fn.run_until_complete(fit, compile, metric, loss, optimizer)
+        await fn.run_until_complete(
+            fit,
+            compile,
+            metric,
+            loss,
+            optimizer,
+            prepared_model,
+            dense_layer_3,
+            dense_layer_2,
+            dense_layer_1,
+            input_layer,
+        )
         fitted_model = fit.outputs["fitted_model"].value
         metrics_dictionary = fit.outputs["metrics_dictionary"].value
         history = fit.outputs["history"].value
