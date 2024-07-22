@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "funcnodes-keras"
-version = "0.1.7"
+version = "0.1.8"
 description = ""
 authors = ["Kourosh Rezaei <kouroshrezaei90@gmail.com>"]
 readme = "README.md"
@@ -10,7 +10,7 @@ python = ">=3.11,<3.12"
 
 funcnodes = "^0.2.21"
 
-tensorflow-macos = { version = "^2.15.0", markers = "platform_system=='Darwin' and platform_machine=='arm64'" }
+# tensorflow-macos = { version = "^2.15.0", markers = "platform_system=='Darwin' and platform_machine=='arm64'" }
 tensorflow = "^2.13.0"
 keras = "^3.4.1"
 

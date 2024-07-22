@@ -3,15 +3,11 @@ import unittest
 import numpy as np
 from tensorflow.keras.callbacks import History
 from tensorflow.keras.models import Model
-from tensorflow.keras import Input
-from tensorflow.keras.layers import Dense
-from tensorflow.keras import KerasTensor
 
 from funcnodes_keras.datasets import _mnist
 from funcnodes_keras.metrics import _SparseCategoricalAccuracy
 from funcnodes_keras.losses import _SparseCategoricalCrossentropy
 from funcnodes_keras.optimizers import _RMSprop
-
 from funcnodes_keras.applications import _ResNet50
 from funcnodes_keras.layers import _Input, _Dense, Activation
 from funcnodes_keras.models import _Model

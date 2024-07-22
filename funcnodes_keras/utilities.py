@@ -20,6 +20,6 @@ def _to_categorical(
 UTILS_NODE_SHELFE = Shelf(
     nodes=[_to_categorical],
     subshelves=[],
-    name="uTILITIES",
+    name="Utilities",
     description="Python & NumPy utilities",
 )
