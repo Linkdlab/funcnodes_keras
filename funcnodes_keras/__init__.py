@@ -9,7 +9,7 @@ from .layers import LAYERS_NODE_SHELFE
 from .models import MODELS_NODE_SHELFE
 from .utilities import UTILS_NODE_SHELFE
 
-__version__ = "0.1.8"
+__version__ = "0.1.10"
 
 NODE_SHELF = fn.Shelf(
     name="Keras",
