@@ -9,15 +9,19 @@ readme = "README.md"
 python = ">=3.11,<3.12"
 
 funcnodes = "*"
-
-# tensorflow-macos = { version = "^2.15.0", markers = "platform_system=='Darwin' and platform_machine=='arm64'" }
-tensorflow = "^2.13.0"
-keras = "^3.4.1"
-
+tensorflow-io-gcs-filesystem = "0.31.0"
+tensorflow = "2.16.1"
+tensorflow-intel = "2.16.1"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.2.2"
+pytest = "*"
+pre-commit = "*"
+funcnodes-module = "*"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."funcnodes.module"]
+module = "funcnodes_keras"
+shelf = "funcnodes_keras:NODE_SHELF"
