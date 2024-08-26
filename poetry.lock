@@ -2009,7 +2009,7 @@ and-cuda = ["nvidia-cublas-cu12 (==12.3.4.1)", "nvidia-cuda-cupti-cu12 (==12.3.1
 name = "tensorflow-intel"
 version = "2.17.0"
 description = "TensorFlow is an open source machine learning framework for everyone."
-optional = false
+optional = true
 python-versions = ">=3.9"
 files = [
     {file = "tensorflow_intel-2.17.0-cp310-cp310-win_amd64.whl", hash = "sha256:f61144e1dc8d19971a6765d35c29c61b9582eb767606613cbc383926ecb0f002"},
@@ -2446,4 +2446,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "9a4c8291d572c47233eda1ef07e05ed5962b0f01957efb9ab290487eeab15ea4"
+content-hash = "3f91edd8c4f7811332c920e5719cc053decd28f1ded5abbeca3c50018fb7119b"
