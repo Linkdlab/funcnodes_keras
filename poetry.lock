@@ -550,13 +550,13 @@ requests = "*"
 
 [[package]]
 name = "funcnodes-module"
-version = "0.1.8"
+version = "0.1.9"
 description = ""
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "funcnodes_module-0.1.8-py3-none-any.whl", hash = "sha256:6a0b15f7c33015c04b9d0b11c35c5ddc772fe57aceee4d85e0a340637cd98bb4"},
-    {file = "funcnodes_module-0.1.8.tar.gz", hash = "sha256:6a05c1f6e31b96eb0f4f387506b29ab7c5687dead988e1f0d004e0bf7320e0eb"},
+    {file = "funcnodes_module-0.1.9-py3-none-any.whl", hash = "sha256:0fd0a02c7bdcf0baab3104ab7f06b535a68c0f2c9515412a3b0bbd6cb292aa4b"},
+    {file = "funcnodes_module-0.1.9.tar.gz", hash = "sha256:176f867108607ca44b5381a7b6c3e9146e7557f61d2b94d86f0943fa849861a3"},
 ]
 
 [[package]]

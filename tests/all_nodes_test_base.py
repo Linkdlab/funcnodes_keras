@@ -2,8 +2,33 @@
 import unittest
 from funcnodes_keras import NODE_SHELF
 from functools import wraps
+from typing import List
+import funcnodes_module
+
+
+def add_subclass_tests(cls):
+    # Dynamically add test methods from sub_test_classes
+    if not hasattr(cls, "sub_test_classes"):
+        return
+    for testcase in cls.sub_test_classes:
+        for attr_name in dir(testcase):
+            if attr_name.startswith("test_"):
+                # Retrieve the test method from the subclass
+                test_method = getattr(testcase, attr_name)
+                # Create a unique name for the test method in this class
+                new_test_name = f"test_{testcase.__name__}_{attr_name}"
+                # Add the test method to this class
+                setattr(cls, new_test_name, test_method)
+
 
 class TestAllNodesBase(unittest.IsolatedAsyncioTestCase):
+    sub_test_classes: List[unittest.IsolatedAsyncioTestCase] = []
+
+    def __init_subclass__(cls) -> None:
+        super().__init_subclass__()
+        add_subclass_tests(cls)
+        return cls
+
     @classmethod
     def setUpClass(cls):
         def get_all_nodes_classes(shelf, current=None):
