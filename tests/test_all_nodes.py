@@ -3,6 +3,7 @@ import os
 import unittest
 import funcnodes_keras as fnmodule
 from funcnodes_keras import fit
+from funcnodes import lib
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from all_nodes_test_base import TestAllNodesBase  # noqa E402
@@ -37,9 +38,9 @@ class TestAllNodes(TestAllNodesBase):
     sub_test_classes = sub_test_classes
 
     ignore_nodes = (
-        fnmodule.DATASETS_NODE_SHELFE["nodes"]
-        + fnmodule.LAYERS_NODE_SHELFE["nodes"]
-        + fnmodule.MODELS_NODE_SHELFE["nodes"]
+        lib.flatten_shelf(fnmodule.DATASETS_NODE_SHELFE)
+        + lib.flatten_shelf(fnmodule.LAYERS_NODE_SHELFE)
+        + lib.flatten_shelf(fnmodule.MODELS_NODE_SHELFE)
         + [
             fit._evaluate,
             fit._train_on_batch,
