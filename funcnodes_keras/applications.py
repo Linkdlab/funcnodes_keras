@@ -1,8 +1,8 @@
-from typing import Union, Optional, Iterator, Tuple, Callable
-import numpy as np
+from typing import Union, Optional, Tuple, Callable
 from funcnodes import Shelf, NodeDecorator
 from exposedfunctionality import controlled_wrapper
 from enum import Enum
+
 from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Model
 from tensorflow.keras.applications import (
@@ -118,10 +118,7 @@ def _Xception(
             raise ValueError(
                 "if include_top is True, the (input_shape_height, input_shape_width) has to be (229, 229)."
             )
-        if len(input_shape) != 3 or input_shape[2] != 3:
-            raise ValueError(
-                "input_shape must be a tuple of three integers (height, width, 3)."
-            )
+
         if input_shape[0] < 71 or input_shape[1] < 71:
             raise ValueError(
                 "input_shape dimensions (height, width) must be no smaller than 71."
@@ -1604,8 +1601,8 @@ def _EfficientNetV2B0(
     include_top: bool = True,
     weights: Weights = Weights.default(),
     input_tensor: Optional[Input] = None,
-    input_shape_height: int = 380,
-    input_shape_width: int = 380,
+    input_shape_height: Optional[int] = 224,
+    input_shape_width: Optional[int] = 224,
     pooling: Pooling = Pooling.default(),
     classes: int = 1000,
     classifier_activation: Optional[
@@ -1620,23 +1617,17 @@ def _EfficientNetV2B0(
     if isinstance(weights, Weights):
         weights = weights.value
 
-    input_shape: Tuple[int, int, int] = (input_shape_height, input_shape_width, 3)
-    # Validate input_shape
-    if input_shape is not None:
-        if include_top and input_shape != (380, 380, 3):
-            raise ValueError(
-                "if include_top is True, the (input_shape_height, input_shape_width) has to be (380, 380)."
-            )
-        if len(input_shape) != 3 or input_shape[2] != 3:
-            raise ValueError(
-                "input_shape must be a tuple of three integers (height, width, 3)."
-            )
-        if input_shape[0] < 32 or input_shape[1] < 32:
-            raise ValueError(
-                "input_shape dimensions (height, width) must be no smaller than 71."
-            )
-    elif not include_top:
-        input_shape = (input_shape_height, input_shape_width, 3)
+    if include_top:
+        input_shape = (224, 224, 3)
+    else:
+        if input_shape_height is None or input_shape_width is None:
+            raise ValueError("If top is not included provide height and width")
+        input_shape = (int(input_shape_height), int(input_shape_width), 3)
+
+    if input_shape[0] < 32 or input_shape[1] < 32:
+        raise ValueError(
+            "input_shape dimensions (height, width) must be no smaller than 71."
+        )
 
     return EfficientNetV2B0(
         include_top=include_top,
@@ -2302,5 +2293,15 @@ APPLICATION_NODE_SHELFE = Shelf(
     ],
     subshelves=[],
     name="Applications",
-    description="Keras Applications are deep learning models that are made available alongside pre-trained weights. These models can be used for prediction, feature extraction, and fine-tuning.Weights are downloaded automatically when instantiating a model. They are stored at ~/.keras/models/.Upon instantiation, the models will be built according to the image data format set in your Keras configuration file at ~/.keras/keras.json. For instance, if you have set image_data_format=channels_last, then any model loaded from this repository will get built according to the data format convention 'Height-Width-Depth'.",
+    description="Keras Applications are deep learning models that"
+    + "are made available alongside pre-trained weights. "
+    + "These models can be used for prediction, feature "
+    + "extraction, and fine-tuning.Weights are downloaded "
+    + "automatically when instantiating a model. "
+    + "They are stored at ~/.keras/models/.Upon instantiation, "
+    + "the models will be built according to the image data format"
+    + "set in your Keras configuration file at ~/.keras/keras.json. "
+    + "For instance, if you have set image_data_format=channels_last, "
+    + "then any model loaded from this repository will get built "
+    + "according to the data format convention 'Height-Width-Depth'.",
 )

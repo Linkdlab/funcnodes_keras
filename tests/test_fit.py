@@ -130,4 +130,4 @@ class TestPredictingNodes(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(t_model, fn.Node)
         await fn.run_until_complete(t_model, ft_model)
         prediction = t_model.outputs["out"].value
-        print(prediction)
+        # print(prediction)
