@@ -8,16 +8,29 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
 
+tensorflow-io-gcs-filesystem = [
+    { version = "0.31", platform = "win32" },
+    # { version = "*", platform = "linux", optional = true },
+    # { version = "*", platform = "darwin", optional = true },
+]
 funcnodes = "*"
-
-# tensorflow-macos = { version = "^2.15.0", markers = "platform_system=='Darwin' and platform_machine=='arm64'" }
-tensorflow = "^2.13.0"
-keras = "^3.4.1"
-
+tensorflow = "2.17"
+tensorflow-intel = [
+    { version = "2.17", platform = "win32" },
+    # { version = "*", platform = "linux", optional = true },
+    # { version = "*", platform = "darwin", optional = true },
+]
+funcnodes-core = ">=0.1.2"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.2.2"
+pytest = "*"
+pre-commit = "*"
+funcnodes-module = "*"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."funcnodes.module"]
+module = "funcnodes_keras"
+shelf = "funcnodes_keras:NODE_SHELF"

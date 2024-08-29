@@ -89,7 +89,7 @@ def _BinaryAccuracy(
 ) -> Metric:
     if isinstance(dtype, DataType):
         dtype = dtype.value
-    if not 0 <= threshold < 1:
+    if threshold is not None and not 0 <= threshold < 1:
         raise ValueError("threshold must be between 0 and 1")
     return BinaryAccuracy(dtype=dtype, threshold=threshold)
 
@@ -697,7 +697,7 @@ def _F1Score(
         dtype = dtype.value
     if isinstance(average, Average):
         average = Average.average
-    if 0 <= threshold < 1:
+    if threshold is not None and 0 <= threshold < 1:
         raise ValueError("threshold must be between 0 and 1")
     return F1Score(average=average, dtype=dtype, threshold=threshold)
 
@@ -717,7 +717,7 @@ def _FBetaScore(
         dtype = dtype.value
     if isinstance(average, Average):
         average = Average(average)
-    if 0 <= threshold < 1:
+    if threshold is not None and 0 <= threshold < 1:
         raise ValueError("threshold must be between 0 and 1")
 
     return FBetaScore(average=average, dtype=dtype, threshold=threshold, beta=beta)
@@ -785,7 +785,7 @@ def _BinaryIoU(
 ) -> Metric:
     if isinstance(dtype, DataType):
         dtype = dtype.value
-    if 0 <= threshold < 1:
+    if not 0 <= threshold < 1:
         raise ValueError("threshold must be between 0 and 1")
     return BinaryIoU(
         target_class_ids=target_class_ids,
@@ -804,7 +804,6 @@ def _OneHotIoU(
     target_class_ids: Union[list, tuple],
     dtype: DataType = DataType.default(),
     ignore_class: Optional[int] = None,
-    sparse_y_true: bool = True,
     sparse_y_pred: bool = True,
     axis: int = -1,
 ) -> Metric:
@@ -816,7 +815,6 @@ def _OneHotIoU(
         target_class_ids=target_class_ids,
         dtype=dtype,
         ignore_class=ignore_class,
-        sparse_y_true=sparse_y_true,
         sparse_y_pred=sparse_y_pred,
         axis=axis,
     )
@@ -831,7 +829,7 @@ def _OneHotMeanIoU(
     num_classes: int,
     dtype: DataType = DataType.default(),
     ignore_class: Optional[int] = None,
-    sparse_y_true: bool = True,
+    sparse_y_pred: bool = True,
     axis: int = -1,
 ) -> Metric:
     if isinstance(dtype, DataType):
@@ -841,7 +839,7 @@ def _OneHotMeanIoU(
         num_classes=num_classes,
         dtype=dtype,
         ignore_class=ignore_class,
-        sparse_y_true=sparse_y_true,
+        sparse_y_pred=sparse_y_pred,
         axis=axis,
     )
 
@@ -938,5 +936,7 @@ METRICS_NODE_SHELFE = Shelf(
         HINGE_NODE_SHELFE,
     ],
     name="Metrics ",
-    description="A metric is a function that is used to judge the performance of your model./n Metric functions are similar to loss functions, except that the results from evaluating a metric are not used when training the model. Note that you may use any loss function as a metric.",
+    description="A metric is a function that is used to judge the performance of your model./n "
+    + "Metric functions are similar to loss functions, except that the results from evaluating a metric "
+    + "are not used when training the model. Note that you may use any loss function as a metric.",
 )
