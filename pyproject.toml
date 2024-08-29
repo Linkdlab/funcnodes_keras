@@ -20,6 +20,7 @@ tensorflow-intel = [
     # { version = "*", platform = "linux", optional = true },
     # { version = "*", platform = "darwin", optional = true },
 ]
+funcnodes-core = ">=0.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
