@@ -1,6 +1,7 @@
 import funcnodes as fn
 import unittest
 from funcnodes_keras import utilities
+import tensorflow as tf
 
 
 class TestUtilities(unittest.IsolatedAsyncioTestCase):
@@ -11,3 +12,10 @@ class TestUtilities(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(utility_node, fn.Node)
         await utility_node
         self.assertEqual(utility_node.outputs["out"].value.shape, (4, 4))
+
+    async def test_convert_to_tensor(self):
+        utility_node: fn.Node = utilities._convert_to_tensor()
+        utility_node.inputs["x"].value = [0, 1, 2, 3]
+        self.assertIsInstance(utility_node, fn.Node)
+        await utility_node
+        self.assertIsInstance(utility_node.outputs["out"].value, tf.Tensor)

@@ -38,9 +38,9 @@ class TestAllNodes(TestAllNodesBase):
     sub_test_classes = sub_test_classes
 
     ignore_nodes = (
-        lib.flatten_shelf(fnmodule.DATASETS_NODE_SHELFE)
-        + lib.flatten_shelf(fnmodule.LAYERS_NODE_SHELFE)
-        + lib.flatten_shelf(fnmodule.MODELS_NODE_SHELFE)
+        lib.flatten_shelf(fnmodule.DATASETS_NODE_SHELFE)[0]
+        + lib.flatten_shelf(fnmodule.LAYERS_NODE_SHELFE)[0]
+        + lib.flatten_shelf(fnmodule.MODELS_NODE_SHELFE)[0]
         + [
             fit._evaluate,
             fit._train_on_batch,
