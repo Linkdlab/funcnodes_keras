@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "funcnodes-keras"
-version = "0.1.10"
+version = "0.1.12"
 description = ""
 authors = ["Kourosh Rezaei <kouroshrezaei90@gmail.com>"]
 readme = "README.md"
@@ -25,7 +25,7 @@ funcnodes-core = ">=0.1.2"
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
 pre-commit = "*"
-funcnodes-module = "*"
+funcnodes-module = "^0.1.19"
 
 [build-system]
 requires = ["poetry-core"]
