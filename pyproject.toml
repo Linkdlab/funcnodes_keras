@@ -20,18 +20,13 @@ readme = "README.md"
 python = ">=3.11,<3.12"
 
 tensorflow-io-gcs-filesystem = [
-    { version = "0.37.1", platform = "win32" },
-    { version = "0.37.1", markers = "sys_platform == 'darwin'" },
+    { version = "0.31", platform = "win32" },
+    { version = "0.37.1", platform = "darwin" },
 ]
-tensorflow = [
-    { version = "2.16.2", platform = "win32" },
-    { version = "2.16.2", markers = "sys_platform == 'darwin'" },
-]
-tensorflow-intel = [
-    { version = "2.16.2", platform = "win32" },
-]
-tensorflow-macos = { version = "2.16.2", markers = "sys_platform == 'darwin'" }
-tensorflow-metal = { version = "1.1.0", markers = "sys_platform == 'darwin'" }
+tensorflow = { version = "2.16.2", platform = "win32" }
+tensorflow-intel = { version = "2.16.2", platform = "win32" }
+tensorflow-macos = { version = "2.16.2", platform = "darwin"}
+tensorflow-metal = { version = "1.1.0", platform = "darwin"}
 
 
 funcnodes = "*"
