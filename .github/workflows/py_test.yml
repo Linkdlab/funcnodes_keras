@@ -25,14 +25,5 @@ jobs:
         with:
           python_version: ${{ matrix.python-version }}
 
-      # - name: Run Tests
-      #   run: poetry run pytest
-
-      - name: Run Tests (macOS-specific fix)
-        if: runner.os == 'macOS'
-        run: poetry run pytest --disable-warnings
-
-      - name: Run Tests (Other OS)
-        if: runner.os != 'macOS'
+      - name: Run Tests
         run: poetry run pytest
-
