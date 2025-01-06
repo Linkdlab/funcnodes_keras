@@ -13,8 +13,13 @@ tensorflow-io-gcs-filesystem = [
     { version = "0.31", platform = "win32" },
     { version = "0.37.1", platform = "darwin" },
 ]
-# tensorflow = { version = "2.16.2", platform = "win32" }
-tensorflow = "2.16.2"
+
+tensorflow = [
+    { version = "2.16.2", platform = "linux" },
+    { version = "2.16.2", platform = "win32" },
+    # { version = "2.16.2", platform = "darwin" }
+]
+
 
 tensorflow-intel = { version = "2.16.2", platform = "win32" }
 tensorflow-macos = { version = "2.16.2", platform = "darwin" }
