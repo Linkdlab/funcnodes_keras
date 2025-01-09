@@ -2,7 +2,7 @@ import unittest
 import funcnodes_keras as fnmodule
 from funcnodes_keras import fit
 from funcnodes import lib
-from all_nodes_test_base import TestAllNodesBase  # noqa E402
+from tests.all_nodes_test_base import TestAllNodesBase  
 import test_applications, test_losses, test_fit, test_metrics, test_optimizers, test_utilities  # noqa E402
 
 
