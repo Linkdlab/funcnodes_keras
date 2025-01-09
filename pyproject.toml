@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "funcnodes-keras"
-version = "0.1.13"
+version = "0.1.14"
 description = ""
 authors = ["Kourosh Rezaei <kouroshrezaei90@gmail.com>"]
 readme = "README.md"
@@ -17,13 +17,11 @@ tensorflow-io-gcs-filesystem = [
 tensorflow = [
     { version = "2.16.2", platform = "linux" },
     { version = "2.16.2", platform = "win32" },
-    # { version = "2.16.2", platform = "darwin" }
 ]
 
 
 tensorflow-intel = { version = "2.16.2", platform = "win32" }
 tensorflow-macos = { version = "2.16.2", platform = "darwin" }
-# tensorflow-metal = { version = "1.1.0", platform = "darwin" }
 
 
 funcnodes = "*"
