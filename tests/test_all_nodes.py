@@ -4,13 +4,20 @@ import unittest
 import funcnodes_keras as fnmodule
 from funcnodes_keras import fit
 from funcnodes import lib
-import test_applications, test_losses, test_fit, test_metrics, test_optimizers, test_utilities  # noqa E402
 
 
 sys.path.append(
     os.path.dirname(os.path.abspath(__file__))
 )  # in case test folder is not in sys path
 from all_nodes_test_base import TestAllNodesBase  # noqa: E402
+from tests import (  # noqa: E402
+    test_applications,
+    test_losses,
+    test_fit,
+    test_metrics,
+    test_optimizers,
+    test_utilities,
+)
 
 sub_test_classes = []
 
